@@ -30,17 +30,35 @@ SECRET_KEY = os.environ.get(
 #DEBUG = True
 DEBUG = os.environ.get('DJANGO_DEBUG') != 'False'
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ['*']
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_CREDENTIALS = False
+CORS_PREFLIGHT_MAX_AGE = 0
+CORS_ALLOW_HEADERS = [
+    'accept',
+    'accept-encoding',
+    'accept-language',
+    'authorization',
+    'content-disposition',
+    'content-type',
+    'content-length',
+    'dnt',
+    'origin',
+    'user-agent',
+    'x-csrftoken',
+    'x-requested-with',
+]
 
 
 # Application definition
 
 INSTALLED_APPS = [
     #custom apps
+    'corsheaders',
     'projects.apps.ProjectsConfig',
     'rest_framework',
     'rest_framework.authtoken',
-    'corsheaders',
     #default apps
     'django.contrib.admin',
     'django.contrib.auth',
@@ -62,9 +80,9 @@ REST_FRAMEWORK = {
 AUTH_USER_MODEL =    'users.CustomUser'
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
